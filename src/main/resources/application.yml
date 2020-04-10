@@ -1,0 +1,23 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: Authorization Application
+
+  datasource:
+    url: jdbc:mysql://host.docker.internal:3306/oauth2_jwt?createDatabaseIfNotExist=true&useUnicode=yes&characterEncoding=UTF-8&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: MySql2019!
+  jpa:
+    hibernate:
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        connection:
+          characterEncoding: utf-8
+          CharSet: utf-8
+          useUnicode: true
+    show-sql: true
