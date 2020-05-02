@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>br.com.newsoftware.authentication</groupId>
-    <artifactId>authentication</artifactId>
+    <artifactId>ms-authentication</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>authentication</name>
 
@@ -20,6 +20,9 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
         <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
+        <docker-maven-plugin.version>0.4.10</docker-maven-plugin.version>
+        <docker.image.name>ms-authentication</docker.image.name>
+        <docker.image.tag>latest</docker.image.tag>
     </properties>
     <dependencies>
         <dependency>
@@ -96,6 +99,17 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>br.com.newsoftware.resource</groupId>
+            <artifactId>server-resource</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/server-resource-1.0-SNAPSHOT.jar</systemPath>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -109,10 +123,27 @@
         </dependencies>
     </dependencyManagement>
     <build>
+        <finalName>ms-authentication</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker-maven-plugin.version}</version>
+                <configuration>
+                    <imageName>${docker.image.name}:${docker.image.tag}</imageName>
+                    <dockerDirectory>src/main/docker</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
             </plugin>
         </plugins>
     </build>
