@@ -1,5 +1,6 @@
 package br.com.newsoftware.authorization.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -3,4 +3,4 @@ spring:
     name: ms-authentication
   cloud:
     config:
-      uri: http://localhost:8001
+      uri: http://${CONFIG_SERVER_APPLICATION}:8001
