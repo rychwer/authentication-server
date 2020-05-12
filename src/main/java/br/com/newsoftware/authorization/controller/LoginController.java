@@ -2,10 +2,8 @@ package br.com.newsoftware.authorization.controller;
 
 import br.com.newsoftware.authorization.domain.LoginDTO;
 import br.com.newsoftware.authorization.facade.LoginFacade;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -20,11 +18,15 @@ public class LoginController {
     }
 
     @PostMapping("/client")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
     public void createClientLogin(@RequestBody @Valid LoginDTO loginDTO) {
         loginFacade.createClientLogin(loginDTO);
     }
 
     @PostMapping("/professional")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
     public void createProfessionalLogin(@RequestBody @Valid LoginDTO loginDTO) {
         loginFacade.createProfessionalLogin(loginDTO);
     }

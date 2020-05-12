@@ -10,6 +10,7 @@ import br.com.newsoftware.authorization.repository.UserAuthorityRepository;
 import br.com.newsoftware.authorization.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Set;
 
@@ -32,13 +33,7 @@ public class LoginService {
     }
 
     public Boolean loginExists(LoginDTO loginDTO) {
-        final User user = this.userRepository.findByUsername(loginDTO.getEmail());
-
-        if(user != null) {
-            return true;
-        }
-
-        return false;
+        return !ObjectUtils.isEmpty(this.userRepository.findByUsername(loginDTO.getEmail()));
     }
 
     public void createUser(LoginDTO loginDTO, AuthorityEnum authorityEnum) {

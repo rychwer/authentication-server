@@ -42,4 +42,15 @@ public class DefaultControllerAdvice {
         return errors;
     }
 
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public Map<String, Object> handleGenerateExceptions(Exception ex) {
+        Map<String, Object> errors = new HashMap<>();
+        errors.put("status code", String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
+        errors.put("message", "Internal Server Error");
+        log.error(ex.getLocalizedMessage());
+        return errors;
+    }
+
 }
